@@ -6,24 +6,26 @@ import (
 )
 
 func main() {
-	var deviceid = [...]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126}
-	var eventtype = [...]int{1, 3, 5, 7, 8, 13, 15, 16, 17, 18, 20, 25}
+	var deviceid = [...]int{502497, 502498, 502499, 502500, 502501, 502502, 502503, 502504, 502505, 502506, 502507, 502508, 502509, 502510, 502511, 502512, 502513, 502514, 502515, 502516,
+		502517, 502518, 502519, 502520, 502521, 502522, 502523, 502524, 502525, 502526, 502527, 502528, 502529, 502530, 502531, 502532, 502533, 502534, 502535, 502536, 502537, 502538, 502539,
+		502540, 502541, 502542, 502543, 502544, 502545, 502546, 502547, 502548, 502549, 502550, 502551, 502552, 502553, 502554, 502555, 502556, 502557, 502558, 502559, 502560, 502561, 502562,
+		502563, 502564, 502565, 502566, 502567, 502568, 502569, 502570, 502571, 502572, 502573, 502574, 502575, 502576, 502577, 502578, 502579, 502580, 502581, 502582, 502583, 502584, 502585,
+		502586, 502587, 502588, 502589, 502590, 502591, 502592, 502593, 502594, 502595, 502596}
 	var etime int
-	etime = 1661961600000 //+300000
+	etime = 1664553600000 //+9000000
+
 	file, err := os.OpenFile("insert.sql", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0744)
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer file.Close()
 	for i := 0; i < len(deviceid); i++ {
-		for j := 1; j < 9; j++ {
-			for k := 1; k < len(eventtype); k++ {
-				etime += 250000
-				str := fmt.Sprintf("INSERT INTO public.pecalarmextend(actiongroupt,alarmstatus,buildingid,channelid,code1,code2,confirmeventstatus,convtype,description,"+
-					"deviceid,devicetype,devmodelid,eventbyte,eventtime,floorid,malarmstatus,manualfilterflag,peceventid,peceventlevel,peceventtype,roomid,ruleid,stationflag,"+
-					"stationid) VALUES (0,1,NULL,5,1069,0,1,100,'测试事件%d',%d,'linesegment',63,32771,%d,4,NULL,0,-5051379875167811654,2,%d,1,0,0,1);\n", k+12*(j-1)+12*8*i, deviceid[i], etime, eventtype[k])
-				file.WriteString(str)
-			}
+		for j := 1; j < 6; j++ {
+			etime += 3000000
+			str := fmt.Sprintf("INSERT INTO public.pecalarmextend(alarmstatus,buildingid,channelid,code1,code2,confirmeventstatus,convtype,description,"+
+				"deviceid,devicetype,devmodelid,eventbyte,eventtime,floorid,malarmstatus,manualfilterflag,peceventid,peceventlevel,peceventtype,roomid,ruleid,stationflag,"+
+				"stationid) VALUES (1,NULL,5,1069,0,1,100,'测试事件%d',%d,'linesegment',63,32771,%d,4,NULL,0,-5051379875167811654,2,1,1,0,0,1);\n", i*5+j, deviceid[i], etime)
+			file.WriteString(str)
 		}
 	}
 }
