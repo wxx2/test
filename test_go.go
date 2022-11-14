@@ -13,6 +13,7 @@ func showMsg(str string) {
 }
 
 func main() {
-	go showMsg("go")
-	showMsg("down")
+	for gap := 10; gap > 0; gap /= 2 {
+		fmt.Println(gap)
+	}
 }
